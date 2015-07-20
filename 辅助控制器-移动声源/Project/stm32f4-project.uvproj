@@ -512,6 +512,11 @@
               <FileType>1</FileType>
               <FilePath>..\Drivers\exit.c</FilePath>
             </File>
+            <File>
+              <FileName>pwm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\pwm.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -526,6 +531,11 @@
               <FileName>stm32f4_discovery.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Modules\stm32f4_discovery.c</FilePath>
+            </File>
+            <File>
+              <FileName>square_wave.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Modules\square_wave.c</FilePath>
             </File>
           </Files>
         </Group>

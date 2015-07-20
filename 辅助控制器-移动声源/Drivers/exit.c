@@ -73,40 +73,29 @@ void exti_config(GPIO_TypeDef *gpiox, u8 pin_num)
 	nvic_config(irq_channel, 10);
 }
 
-//EXTI1_IRQHandler 
-//EXTI2_IRQHandler 
-//EXTI3_IRQHandler 
-//EXTI4_IRQHandler
-void EXTI0_IRQHandler(void)
-{
-	if(EXTI_GetITStatus(EXTI_Line0) != RESET){
-		EXTI_ClearITPendingBit(EXTI_Line0);
-		
-	}
-}
-
-extern uint8_t nrf_buffer[RX_PLOAD_WIDTH];
 void EXTI9_5_IRQHandler(void)
 {
 	uint8_t state = 0;
-	if(EXTI_GetITStatus(EXTI_Line8) != RESET){
-		EXTI_ClearITPendingBit(EXTI_Line8);
+	if(EXTI_GetITStatus(EXTI_Line5) != RESET){
+		EXTI_ClearITPendingBit(EXTI_Line5);
 		switch(NRF24L01_Get_State(&state)){
-			case RX_OK:
-				NRF24L01_Write_Reg(NRF_WRITE_REG+STATUS, state); 			//清除TX_DS或MAX_RT中断标志
-				NRF24L01_Read_Buf(RD_RX_PLOAD, nrf_buffer, RX_PLOAD_WIDTH);	//读取数据
-				NRF24L01_Write_Reg(FLUSH_TX, 0xff);							//清除TX FIFO寄存器 
-				nrf24l01_state = RX_OK;
+			case TX_OK:
+				NRF24L01_Write_Reg(NRF_WRITE_REG+STATUS,state); //清除TX_DS或MAX_RT中断标志
+				NRF24L01_Write_Reg(FLUSH_TX,0xff);				//清除TX FIFO寄存器 
+				nrf_state = TX_OK;
 				break;
-			default:
-				nrf24l01_state = NONE_DATA;
+			case MAX_TX:
+				NRF24L01_Write_Reg(NRF_WRITE_REG+STATUS,state); //清除TX_DS或MAX_RT中断标志
+				NRF24L01_Write_Reg(FLUSH_TX,0xff);				//清除TX FIFO寄存器 
+				nrf_state = MAX_TX;
+				break;
+			case RX_OK:
+				NRF24L01_Write_Reg(NRF_WRITE_REG+STATUS, state); 				//清除TX_DS或MAX_RT中断标志
+				NRF24L01_Read_Buf(RD_RX_PLOAD, nrf_rx_buffer, RX_PLOAD_WIDTH);	//读取数据
+				NRF24L01_Write_Reg(FLUSH_TX, 0xff);								//清除TX FIFO寄存器 
+				nrf_state = RX_OK;
 				break;
 		}
 	}
 }
 
-
-void EXTI15_10_IRQHandler(void)
-{
-	
-}

@@ -41,11 +41,11 @@ void uart4_init(uint32_t baudRate)
 	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
 	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
 	USART_Init(UART4, &USART_InitStructure); 
-	//USART_ITConfig(UART4, USART_IT_RXNE,ENABLE);
+	USART_ITConfig(UART4, USART_IT_RXNE,ENABLE);
 	USART_Cmd(UART4, ENABLE);
 	USART_ClearFlag(UART4, USART_FLAG_TC);
 	
-	//nvic_config(UART4_IRQn, 4);
+	nvic_config(UART4_IRQn, 4);
 }
 
 //重定向printf函数
@@ -56,16 +56,16 @@ int fputc(int ch, FILE *f)
 	return ch;
 }
 
-//重定向scanf函数
-int fgetc(FILE *f)
-{
-	uint8_t val;
-	while (USART_GetFlagStatus(UART4, USART_FLAG_RXNE) == RESET);
-	val = USART_ReceiveData(UART4);
-	USART_SendData(UART4, val);
-	while (USART_GetFlagStatus(UART4, USART_FLAG_TC) == RESET);
-	return (int)val;
-}
+////重定向scanf函数
+//int fgetc(FILE *f)
+//{
+//	uint8_t val;
+//	while (USART_GetFlagStatus(UART4, USART_FLAG_RXNE) == RESET);
+//	val = USART_ReceiveData(UART4);
+//	USART_SendData(UART4, val);
+//	while (USART_GetFlagStatus(UART4, USART_FLAG_TC) == RESET);
+//	return (int)val;
+//}
 
 void usart_sendByte(USART_TypeDef *usart, u8 val)
 {
@@ -91,12 +91,26 @@ void USART1_IRQHandler(void)
 	}
 }
 
+#include "stm32f4_discovery.h"
 void UART4_IRQHandler(void)
 {
+	uint8_t ch;
 	if(USART_GetFlagStatus(UART4,USART_FLAG_RXNE)==SET)
 	{
-		USART_ReceiveData(UART4);
+		ch = USART_ReceiveData(UART4);
 		USART_ClearITPendingBit(UART4,USART_IT_RXNE);
-
+		usart_sendByte(UART4, ch);
+		if(ch == 'a'){
+			STM_EVAL_LEDToggle(LED3);
+		}
+		else if(ch == 'b'){
+			STM_EVAL_LEDToggle(LED4);
+		}
+		else if(ch == 'c'){
+			STM_EVAL_LEDToggle(LED5);
+		}
+		else if(ch == 'd'){
+			STM_EVAL_LEDToggle(LED6);
+		}
 	}
 }

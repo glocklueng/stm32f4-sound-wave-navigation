@@ -57,5 +57,3 @@ void set_pwm(float pwm1, float pwm2)
 	set_pwm1(pwm1);
 	set_pwm2(pwm2);
 }
-
-

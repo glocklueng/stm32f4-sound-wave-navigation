@@ -4,7 +4,27 @@
 #include "stm32f4xx.h"
 #include "bitband.h"
 
-extern uint8_t nrf24l01_state;
+//24L01发送接收数据宽度定义
+#define TX_ADR_WIDTH    5   	//5字节的地址宽度
+#define RX_ADR_WIDTH    5   	//5字节的地址宽度
+#define TX_PLOAD_WIDTH  32  	//32字节的用户数据宽度
+#define RX_PLOAD_WIDTH  32  	//32字节的用户数据宽度
+
+extern uint8_t nrf_state;
+extern uint8_t nrf_tx_buffer[TX_PLOAD_WIDTH];
+extern uint8_t nrf_rx_buffer[RX_PLOAD_WIDTH];
+
+//24L01操作线
+#define NRF24L01_CE   PbOutBit(7) 	//24L01片选信号
+
+#define MAX_TX  		0x10  //达到最大发送次数中断
+#define TX_OK   		0x20  //TX发送完成中断
+#define RX_OK   		0x40  //接收到数据中断
+#define SENDING_DATA	0X01
+#define WAITING_DATA	0X02
+
+#define NRF_RX_MODE		0
+#define NRF_TX_MODE		1
 
 //NRF24L01寄存器操作命令
 #define NRF_READ_REG    0x00  //读配置寄存器,低5位为寄存器地址
@@ -29,8 +49,8 @@ extern uint8_t nrf24l01_state;
 #define MAX_TX  		0x10  //达到最大发送次数中断
 #define TX_OK   		0x20  //TX发送完成中断
 #define RX_OK   		0x40  //接收到数据中断
-#define NONE_DATA		0X00
-#define WAIT_DATA		0X02
+#define SENDING_DATA	0X01
+#define WAITING_DATA	0X02
 
 #define OBSERVE_TX      0x08  //发送检测寄存器,bit7:4,数据包丢失计数器;bit3:0,重发计数器
 #define CD              0x09  //载波检测寄存器,bit0,载波检测;
@@ -53,24 +73,16 @@ extern uint8_t nrf24l01_state;
 //24L01操作线
 #define NRF24L01_CE   PbOutBit(7) 	//24L01片选信号
 
-
-//24L01发送接收数据宽度定义
-#define TX_ADR_WIDTH    5   	//5字节的地址宽度
-#define RX_ADR_WIDTH    5   	//5字节的地址宽度
-#define TX_PLOAD_WIDTH  32  	//32字节的用户数据宽度
-#define RX_PLOAD_WIDTH  32  	//32字节的用户数据宽度
-									   	   
-
-void NRF24L01_Init(void);//初始化
+void NRF24L01_Init(uint8_t mode);
 void NRF24L01_RX_Mode(void);//配置为接收模式
 void NRF24L01_TX_Mode(void);//配置为发送模式
-u8 NRF24L01_Write_Buf(u8 reg, u8 *pBuf, u8 u8s);//写数据区
-u8 NRF24L01_Read_Buf(u8 reg, u8 *pBuf, u8 u8s);//读数据区		  
-u8 NRF24L01_Read_Reg(u8 reg);			//读寄存器
-u8 NRF24L01_Write_Reg(u8 reg, u8 value);//写寄存器
-u8 NRF24L01_Check(void);//检查24L01是否存在
-u8 NRF24L01_TxPacket(u8 *txbuf);//发送一个包的数据
-u8 NRF24L01_RxPacket(u8 *rxbuf);//接收一个包的数据
+uint8_t NRF24L01_Write_Buf(uint8_t reg, uint8_t *pBuf, uint8_t uint8_ts);//写数据区
+uint8_t NRF24L01_Read_Buf(uint8_t reg, uint8_t *pBuf, uint8_t uint8_ts);//读数据区		  
+uint8_t NRF24L01_Read_Reg(uint8_t reg);			//读寄存器
+uint8_t NRF24L01_Write_Reg(uint8_t reg, uint8_t value);//写寄存器
+uint8_t NRF24L01_Check(void);//检查24L01是否存在
+void NRF24L01_TxPacket(uint8_t *txbuf);//发送一个包的数据
+uint8_t NRF24L01_RxPacket(uint8_t *rxbuf);//接收一个包的数据
 uint8_t NRF24L01_Get_State(uint8_t *pState);
 
 
