@@ -40,6 +40,12 @@ void gpio_af_pp_up_init(GPIO_TypeDef *gpio, uint32_t gpio_pin)
 	gpio_config(gpio, gpio_pin, GPIO_Mode_AF, GPIO_OType_PP, GPIO_PuPd_UP, GPIO_Speed_100MHz);
 }
 
+//复用推挽下拉
+void gpio_af_pp_down_init(GPIO_TypeDef *gpio, uint32_t gpio_pin)
+{
+	gpio_config(gpio, gpio_pin, GPIO_Mode_AF, GPIO_OType_PP, GPIO_PuPd_DOWN, GPIO_Speed_100MHz);
+}
+
 //复用开漏无拉
 void gpio_af_od_no_init(GPIO_TypeDef *gpio, uint32_t gpio_pin)
 {

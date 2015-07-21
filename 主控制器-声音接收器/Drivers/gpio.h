@@ -14,6 +14,7 @@ void gpio_out_pp_up_init(GPIO_TypeDef *gpio, uint32_t gpio_pin);
 void gpio_in_up_init(GPIO_TypeDef *gpio, uint32_t gpio_pin);
 void gpio_in_down_init(GPIO_TypeDef *gpio, uint32_t gpio_pin);
 void gpio_af_pp_up_init(GPIO_TypeDef *gpio, uint32_t gpio_pin);
+void gpio_af_pp_down_init(GPIO_TypeDef *gpio, uint32_t gpio_pin);
 void gpio_af_od_no_init(GPIO_TypeDef *gpio, uint32_t gpio_pin);
 void gpio_af_od_up_init(GPIO_TypeDef *gpio, uint32_t gpio_pin);
 
