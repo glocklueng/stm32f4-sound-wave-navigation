@@ -1,0 +1,98 @@
+discovery
+	LED3 -> PD13
+	LED4 -> PD12
+	LED5 -> PD14
+	LED6 -> PD15
+	KEY  -> PA0
+
+nona_board
+	LED2 -> PB0
+	LED3 -> PC0
+	KEY  -> PA0
+
+delay
+	SysTick
+
+USART
+	UART4:
+		TXD -> PC10
+		RXD -> PC11
+	USART1:
+		TXD -> PB6
+		RXD -> PB7
+
+TIMER
+	TIM6
+	TIM7
+
+PWM
+	TIM9：
+		CH1 -> PE5
+		CH2 -> PE6
+
+micros_time
+	TIM5
+
+micros_time_16
+	TIM14
+
+myiic
+	SDA -> PB8(与方波输出冲突)
+	SCL -> PB9
+
+encoder
+	TIM2:
+		CH1 -> PA15
+		CH2 -> PB3
+
+motor
+	PWM
+	IN1 -> PE1
+	IN2 -> PE2
+
+capture
+	CH1 -> PB6
+	CH2 -> PB7
+	CH4 -> PB9
+
+NRF24L01
+	SPI1: （与触摸屏复用）
+		SPI1_SCK  -> PA5
+		SPI1_MOSI -> PA7 
+		SPI1_MISO -> PB4 
+	NRF24L01_CS -> PA8
+	NRF24L01_CE -> PB7
+	NRF24L01_IQR-> PB5
+
+square_wave
+	TIM10: PB8
+
+LCD
+	LCD_LED   -> PB1
+	LCD_RESET -> PF11  
+	FSMC:
+		FSMC_D2(DB2)  -> PD0
+		FSMC_D3(DB3)  -> PD1
+		FSMC_NOE(RD)  -> PD4
+		FSMC_NWE(WR)  -> PD5
+		FSMC_D13(DB13)-> PD8
+		FSMC_D14(DB14)-> PD9
+		FSMC_D15(DB15)-> PD10
+		FSMC_D0(DB0)  -> PD14
+		FSMC_D1(DB1)  -> PD15
+		FSMC_D4(DB4)  -> PE7
+		FSMC_D5(DB5)  -> PE8
+		FSMC_D6(DB6)  -> PE9
+		FSMC_D7(DB7)  -> PE10
+		FSMC_D8(DB8)  -> PE11
+		FSMC_D9(DB9)  -> PE12
+		FSMC_D10(DB10)-> PE13
+		FSMC_D11(DB11)-> PE14
+		FSMC_D12(DB12)-> PE15
+	touch:
+		SPI1:
+			T_CS -> A8
+			SPI1_SCK  -> PA5
+			SPI1_MOSI -> PA7
+			SPI1_MISO -> PB4
+

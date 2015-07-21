@@ -17,20 +17,32 @@ int main()
 	uart4_init(115200);
 	print_clock_freq();
 
-//	square_wave_init();		//	方波输出初始化,默认为1KHz
+	square_wave_init();		//	方波输出初始化,默认为1KHz
 	STM_EVAL_LEDInit(LED3);
-	NRF24L01_Init(NRF_RX_MODE);
+	STM_EVAL_LEDInit(LED4);
+	STM_EVAL_LEDInit(LED5);
+	STM_EVAL_LEDInit(LED6);
+//	NRF24L01_Init(NRF_RX_MODE);
 	
 	while(1){
-		if(nrf_state == RX_OK){
-			nrf_state = WAITING_DATA;
-			printf("rev: %s\r\n", nrf_rx_buffer);
-			memset(nrf_rx_buffer, 0, sizeof(uint8_t)*RX_ADR_WIDTH);
-			STM_EVAL_LEDToggle(LED3);
+//		if(nrf_state == RX_OK){
+//			nrf_state = WAITING_DATA;
+//			printf("rev: %s\r\n", nrf_rx_buffer);
+//			memset(nrf_rx_buffer, 0, sizeof(uint8_t)*RX_ADR_WIDTH);
+//			STM_EVAL_LEDToggle(LED3);
+//		}
+		printf("\r\ninput freq: ");
+		scanf("%d", &freq);
+		if(freq == 0){
+			stop_output();
 		}
-//		printf("\r\ninput freq: ");
-//		scanf("%d", &freq);
-//		set_freq(freq);
+		else{
+			start_output();
+			set_freq(freq);
+		}
+		
+//		STM_EVAL_LEDToggle(LED6);
+//		delay_ms(250);
 	}
 }
 

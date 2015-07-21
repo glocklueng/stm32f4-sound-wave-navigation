@@ -29,12 +29,6 @@ void square_wave_init(void)
 	TIM_Cmd(TIM10, ENABLE);
 }
 
-void set_period(uint32_t period)
-{
-	TIM10->ARR = period; 
-	TIM10->CCR1 = period/2;
-}
-
 void set_prescaler(uint32_t prescaler)
 {
 	TIM10->PSC = prescaler;
@@ -43,5 +37,16 @@ void set_prescaler(uint32_t prescaler)
 void set_freq(uint32_t freq)
 {
 	set_prescaler(16800000/freq);
+}
+
+void start_output(void)
+{
+	TIM10->ARR = 9;
+	TIM10->CCR1 = 5;
+}
+
+void stop_output(void)
+{
+	TIM10->CCR1 = 0;
 }
 

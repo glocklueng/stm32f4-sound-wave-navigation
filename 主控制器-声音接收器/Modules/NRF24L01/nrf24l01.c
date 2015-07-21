@@ -173,15 +173,15 @@ uint8_t NRF24L01_Get_State(uint8_t *pState)
 	NRF24L01_CE = 0;
 	ucState=NRF24L01_Read_Reg(STATUS);/*读取status寄存器的值  */       
 	*pState = ucState;
-	if(ucState & RX_OK)    /* 接收到数据 */
+	if(ucState & RX_OK)    		/* 接收到数据 */
 	{
 		res = RX_OK; 
 	}
-	else if(ucState & MAX_TX) /* 达到最大重发次数 */
+	else if(ucState & MAX_TX) 	/* 达到最大重发次数 */
 	{	
 		res = MAX_TX;
 	}
-	else if(ucState & TX_OK)/* 发送完成 */
+	else if(ucState & TX_OK)	/* 发送完成 */
 	{
 		res = TX_OK;	
 	}
@@ -189,7 +189,33 @@ uint8_t NRF24L01_Get_State(uint8_t *pState)
 	return res;
 }
 
+//todo
+void nrf24l01_send_position(Point pos)
+{
+	uint8_t buffer[TX_PLOAD_WIDTH];
+	uint32_t posx = pos.x*1000+0.5f;
+	uint32_t posy = pos.y*1000+0.5f;
+	buffer[0] = posx>>24;
+	buffer[1] = posx>>16;
+	buffer[2] = posx>>8;
+	buffer[3] = posx;
+	buffer[4] = posy>>24;
+	buffer[5] = posy>>16;
+	buffer[6] = posy>>8;
+	buffer[7] = posy;
+	
+	nrf_state = TX_OK;
+	NRF24L01_TxPacket(buffer);
+}
 
+#define NRF_ACK 1
+void nrf24l01_send_ack(void)
+{
+	uint8_t buffer[TX_PLOAD_WIDTH] = {0};
+	buffer[0] = NRF_ACK;
+	nrf_state = TX_OK;
+	NRF24L01_TxPacket(buffer);
+}
 
 
 

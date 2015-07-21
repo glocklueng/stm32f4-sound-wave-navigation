@@ -5,6 +5,7 @@
 #include "gpio.h"
 #include "nrf24l01.h"
 #include "stm32f4_discovery.h"
+#include "micros_time.h"
 
 int main()
 {
@@ -18,6 +19,7 @@ int main()
 	STM_EVAL_LEDInit(LED5);
 	STM_EVAL_LEDInit(LED6);
 //	NRF24L01_Init(NRF_TX_MODE);
+	micros_time_init();
 	
 	while(1){
 //		NRF24L01_TxPacket(nrf_tx_buffer);

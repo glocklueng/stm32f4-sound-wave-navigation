@@ -190,6 +190,15 @@ uint8_t NRF24L01_Get_State(uint8_t *pState)
 	return res;
 }
 
+#define CTRL_START 2
+void nef24l01_send_start_signal(void)
+{
+	uint8_t buffer[TX_PLOAD_WIDTH];
+	buffer[0] = CTRL_START;
+	nrf_state = TX_OK;
+	NRF24L01_TxPacket(buffer);
+	while(nrf_state != TX_OK);
+}
 
 
 

@@ -512,6 +512,16 @@
               <FileType>1</FileType>
               <FilePath>..\Drivers\exit.c</FilePath>
             </File>
+            <File>
+              <FileName>capture.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\capture.c</FilePath>
+            </File>
+            <File>
+              <FileName>micros_time.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\micros_time.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -547,6 +557,16 @@
               <FileType>1</FileType>
               <FilePath>..\User\util.c</FilePath>
             </File>
+            <File>
+              <FileName>location.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\location.c</FilePath>
+            </File>
+            <File>
+              <FileName>control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\control.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -566,6 +586,16 @@
               <FileName>touch.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Modules\LCD\touch.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Doc</GroupName>
+          <Files>
+            <File>
+              <FileName>外设资源.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Doc\外设资源.txt</FilePath>
             </File>
           </Files>
         </Group>

@@ -517,6 +517,11 @@
               <FileType>1</FileType>
               <FilePath>..\Drivers\pwm.c</FilePath>
             </File>
+            <File>
+              <FileName>micros_time.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\micros_time.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -536,6 +541,11 @@
               <FileName>square_wave.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Modules\square_wave.c</FilePath>
+            </File>
+            <File>
+              <FileName>motor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Modules\motor.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -557,6 +567,11 @@
               <FileType>1</FileType>
               <FilePath>..\User\util.c</FilePath>
             </File>
+            <File>
+              <FileName>control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\control.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -576,6 +591,16 @@
               <FileName>touch.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Modules\LCD\touch.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Doc</GroupName>
+          <Files>
+            <File>
+              <FileName>外设资源.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Doc\外设资源.txt</FilePath>
             </File>
           </Files>
         </Group>
